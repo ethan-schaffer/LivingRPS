@@ -77,9 +77,9 @@ choices = [rock, scissors, paper]
 
 screen = pygame.display.set_mode([screen_height, screen_width])
 
+wins = [0, 0, 0]
 going = True
 while going:
-    wins = [0, 0, 0]
     players = []
     for t in [0, 1, 2]:
         for _ in range(player_count):
@@ -87,7 +87,7 @@ while going:
             random.randint(quarter_height, 3 * quarter_height), random.randint(quarter_width, quarter_width * 3))
             velocity = (random.randint(-max_velo, max_velo), random.randint(-max_velo, max_velo))
             accel = (random.randint(-max_accel, max_accel), random.randint(-max_accel, max_accel))
-            players.append(mover.Mover(t, coords, velocity, accel, screen_height, screen_width, max_velo, max_accel))
+            players.append(mover.Mover(t, coords, velocity, accel, screen_width, screen_height, max_velo, max_accel))
     running = True
     while running:
         for event in pygame.event.get():
@@ -127,7 +127,6 @@ while going:
 
         for player in players:
             screen.blit(choices[player.get_color()], player.get_position())
-            #pygame.draw.circle(screen, player.get_color(), player.get_position(), radius)
 
         pygame.display.flip()
 

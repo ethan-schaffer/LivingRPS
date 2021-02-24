@@ -23,6 +23,7 @@ def abs(x):
 class Mover:
     def __init__(self, thing, coords, v, a, max_height, max_width, max_velo, max_accel):
         self.ticks = 0
+        self.time = 0
         self.color = thing
         self.coord_x, self.coord_y = coords
         self.velocity_x, self.velocity_y = v
@@ -57,12 +58,17 @@ class Mover:
 
         self.ticks += 1
         if self.ticks == 5:
+            self.time += 1
             self.ticks = 0
-            target_x = random.randint(0, self.max_width)
+            target_x = random.randint(
+                trim((self.time * self.max_width // 100), self.max_width // 4, 0),
+                trim(self.max_width - (self.time * self.max_width // 100), self.max_width, 3*self.max_width//4))
             vector_x = target_x - self.coord_x
             self.acceleration_x = self.max_accel * vector_x / self.max_width
 
-            target_y = random.randint(0, self.max_height)
+            target_y = random.randint(
+                trim((self.time * self.max_height // 100), self.max_height // 4, 0),
+                trim(self.max_height - (self.time * self.max_height // 100), self.max_height, 3*self.max_height//4))
             vector_y = target_y - self.coord_y
             self.acceleration_y = self.max_accel * vector_y / self.max_height
 
